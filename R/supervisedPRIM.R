@@ -30,19 +30,26 @@ predict.supervisedPRIM <- function(x, newdata, classProb = FALSE, biasAdj = FALS
    other <- x$num.class
    
    # Obtain the probabilities inside of each box
-   boxProbs <- sapply(a$y, FUN = mean)
+   boxProbs <- sapply(x$y, FUN = mean)
    
    # Fit the prim box on the new data
    class(x) <- "prim"
+   primPred <- predict(x, newdata = newdata)
    
    # Calculuate class probabilities using the same methodology of CART
    if(classProb){
-
-      return(NULL)
+      return(boxProbs[primPred])
    }
-   primPred <- predict(x, newdata = newdata)
+   
    # Determine the boxes to use
-   classPred <- ifelse(primPred != other, positive, 1 - positive)
+   inBox <- primPred != other
+   #classPred <- ifelse(primPred != other, positive, 1 - positive)
+   if(x$ind[1] == 1){
+      classPred <- ifelse(inBox, 1L, 0L)
+      return(classPred)
+   }
+   classPred <- ifelse(inBox, 0L, 1L)
+   return(classPred)
    
    
    # To ensure the estimate for the negative class is unbiased,
