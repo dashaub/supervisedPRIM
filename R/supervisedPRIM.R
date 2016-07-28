@@ -16,7 +16,13 @@ predict.supervisedPRIM <- function(x, newdata, classProb = FALSE){
    
    # Fit the prim box on the new data
    class(x) <- "prim"
-   primPred <- predict.prim(x, newdata = newdata)
+   
+   # Calculuate class probabilities using the same methodology of CART
+   if(classProb){
+      return(NULL);
+   }
+   primPred <- predict(x, newdata = newdata)
    # Determine the boxes to use
-   classPred <- ifelse(p != other, positive, 1 - positive)
+   classPred <- ifelse(primPred != other, positive, 1 - positive)
+   return(classPred)
 }
