@@ -1,28 +1,54 @@
 supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
                            mass.min = 0.05, threshold.type = 1){
+   # Ensure the input is all numeric data
+   if(!all(sapply(x, class) %in% c("numeric", "integer"))){
+      stop("All columns in x must be numeric")
+   }
+   
+   # Ensure the data are binomial
+   uniquey <- unique(y)
+   if(length(uniquey) != 2){
+      stop("The y data must be labeled binomial 0/1 data.")
+   }
+   if(!all(unique(y) %in% c(0, 1))){
+      
+   }
    
    result <- prim::prim.box(x, y, peel.alpha = peel.alpha, paste.alpha = paste.alpha,
                   mass.min = mass.min, threshold.type = threshold.type)
    class(result) <- c("supervisedPRIM", "prim")
+   
+   
    return(result)
 }
 
-predict.supervisedPRIM <- function(x, newdata, classProb = FALSE){
+predict.supervisedPRIM <- function(x, newdata, classProb = FALSE, biasAdj = FALSE){
    # Determine if the threshold is upper or lower
    positive <- x$ind[1]
    
    # Determine label for observations outside of the boxes
    other <- x$num.class
    
+   # Obtain the probabilities inside of each box
+   boxProbs <- sapply(a$y, FUN = mean)
+   
    # Fit the prim box on the new data
    class(x) <- "prim"
    
    # Calculuate class probabilities using the same methodology of CART
    if(classProb){
-      return(NULL);
+
+      return(NULL)
    }
    primPred <- predict(x, newdata = newdata)
    # Determine the boxes to use
    classPred <- ifelse(primPred != other, positive, 1 - positive)
+   
+   
+   # To ensure the estimate for the negative class is unbiased,
+   # use the training sample proportion to randomly assign
+   if(biasAdj){
+      
+   }
    return(classPred)
 }
