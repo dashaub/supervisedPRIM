@@ -1,3 +1,17 @@
+#'
+#'@import prim
+#'
+#'@export
+#'
+#'@param x
+#'@param y
+#'@param peel.alpha
+#'@param paste.alpha
+#'@param mass.min
+#'@param threshold.type
+#'@return an object of class \code{supervisedPRIM}. See additional details
+#'in \link{prim.box}
+#'
 supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
                            mass.min = 0.05, threshold.type = 1){
    # Ensure the input is all numeric data
@@ -22,7 +36,15 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
    return(result)
 }
 
-predict.supervisedPRIM <- function(x, newdata, classProb = FALSE, biasAdj = FALSE){
+#'
+#'@export
+#'@param x A trained model of class \code{supervisedPRIM} returned by \link{sueprvisedPRIM}
+#'@param newdata The new data on which to create predictions
+#'@param classProb Should the function return the estimated class
+#'probabilities instead of the predicted class?
+#'
+#'
+predict.supervisedPRIM <- function(x, newdata, classProb = FALSE){
    # Determine if the threshold is upper or lower
    positive <- x$ind[1]
    
@@ -54,8 +76,8 @@ predict.supervisedPRIM <- function(x, newdata, classProb = FALSE, biasAdj = FALS
    
    # To ensure the estimate for the negative class is unbiased,
    # use the training sample proportion to randomly assign
-   if(biasAdj){
-      
-   }
+#    if(biasAdj){
+#       
+#    }
    return(classPred)
 }
