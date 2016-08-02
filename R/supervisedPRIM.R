@@ -3,17 +3,22 @@
 #'
 #'@export
 #'
-#'@param x
-#'@param y
-#'@param peel.alpha
-#'@param paste.alpha
-#'@param mass.min
-#'@param threshold.type
+#'@title Fit PRIM model to a labeled dataset
+#'@description perform supervised classification using Patient Rules Induction Method (PRIM)
+#'@param x matrix of data values
+#'@param y vector of response values
+#'@param peel.alpha peeling quantile tuning parameter
+#'@param paste.alpha pasting quantile tuning parameter
+#'@param mass.min minimum mass tuning parameter
+#'@param threshold.type threshold direction indicator: 1 = ">= threshold",
+#'-1 = "<= threshold"
+#'@param ... additional arguments to pass to \code{\link{prim.box}}
+#'@details Fit 
 #'@return an object of class \code{supervisedPRIM}. See additional details
 #'in \link{prim.box}
 #'
 supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
-                           mass.min = 0.05, threshold.type = 1){
+                           mass.min = 0.05, threshold.type = 1, ...){
    # Ensure the input is all numeric data
    if(!all(sapply(x, class) %in% c("numeric", "integer"))){
       stop("All columns in x must be numeric")
@@ -29,7 +34,7 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
    }
    
    result <- prim::prim.box(x, y, peel.alpha = peel.alpha, paste.alpha = paste.alpha,
-                  mass.min = mass.min, threshold.type = threshold.type)
+                  mass.min = mass.min, threshold.type = threshold.type, ...)
    class(result) <- c("supervisedPRIM", "prim")
    
    
