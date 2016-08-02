@@ -1,9 +1,6 @@
-#'
-#'@import prim
-#'
+#'Fit PRIM model to a labeled dataset
 #'@export
-#'
-#'@title Fit PRIM model to a labeled dataset
+#'@import prim
 #'@description perform supervised classification using Patient Rules Induction Method (PRIM)
 #'@param x matrix of data values
 #'@param y vector of response values
@@ -12,10 +9,10 @@
 #'@param mass.min minimum mass tuning parameter
 #'@param threshold.type threshold direction indicator: 1 = ">= threshold",
 #'-1 = "<= threshold"
-#'@param ... additional arguments to pass to \code{\link{prim.box}}
+#'@param ... additional arguments to pass to \code{\link[prim]{prim.box}}
 #'@details Fit 
 #'@return an object of class \code{supervisedPRIM}. See additional details
-#'in \link{prim.box}
+#'in \link[prim]{prim.box}
 #'
 supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
                            mass.min = 0.05, threshold.type = 1, ...){
@@ -33,7 +30,7 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
       
    }
    
-   result <- prim::prim.box(x, y, peel.alpha = peel.alpha, paste.alpha = paste.alpha,
+   result <- prim.box(x, y, peel.alpha = peel.alpha, paste.alpha = paste.alpha,
                   mass.min = mass.min, threshold.type = threshold.type, ...)
    class(result) <- c("supervisedPRIM", "prim")
    
@@ -41,27 +38,28 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
    return(result)
 }
 
-#'
+#'Model Predictions
 #'@export
-#'@param x A trained model of class \code{supervisedPRIM} returned by \link{sueprvisedPRIM}
+#'@param object A trained model of class \code{supervisedPRIM} returned by \link[supervisedPRIM]{supervisedPRIM}
 #'@param newdata The new data on which to create predictions
 #'@param classProb Should the function return the estimated class
+#'@param ... additional arguments (ignored)
 #'probabilities instead of the predicted class?
 #'
 #'
-predict.supervisedPRIM <- function(x, newdata, classProb = FALSE){
+predict.supervisedPRIM <- function(object, newdata, classProb = FALSE, ...){
    # Determine if the threshold is upper or lower
-   positive <- x$ind[1]
+   positive <- object$ind[1]
    
    # Determine label for observations outside of the boxes
-   other <- x$num.class
+   other <- object$num.class
    
    # Obtain the probabilities inside of each box
-   boxProbs <- sapply(x$y, FUN = mean)
+   boxProbs <- sapply(object$y, FUN = mean)
    
    # Fit the prim box on the new data
    class(x) <- "prim"
-   primPred <- predict(x, newdata = newdata)
+   primPred <- predict(object, newdata = newdata)
    
    # Calculuate class probabilities using the same methodology of CART
    if(classProb){
@@ -71,7 +69,7 @@ predict.supervisedPRIM <- function(x, newdata, classProb = FALSE){
    # Determine the boxes to use
    inBox <- primPred != other
    #classPred <- ifelse(primPred != other, positive, 1 - positive)
-   if(x$ind[1] == 1){
+   if(object$ind[1] == 1){
       classPred <- ifelse(inBox, 1L, 0L)
       return(classPred)
    }
