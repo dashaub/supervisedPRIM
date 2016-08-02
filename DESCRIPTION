@@ -1,1 +1,31 @@
+Package: supervisedPRIM
+Title: Supervised Classification Learning and Prediction using Patient Rules Induction Method (PRIM).
+Version: 1.0.0
+Date: 2016-08-01
+Authors@R:
+  person("David", "Shaub", email = "davidshaub@gmx.com", role = c("aut", "cre")),
+
+Description: The Patient Rules Induction Method (PRIM) is typically
+used for "bump hunting" data mining to identify regions with abnormally
+high concentrations of data with large or small values. This package
+extends this methodology so that it can be applied to binomial classification
+problems and used for prediction. While this method will not usually
+create models with predictive accuracy comparable to more techniques such
+as random forests or boosting, it is not highly correlated with the methodologies
+used by other classification algorithms, so it can be useful in ensembles.
+Depends:
+  R (>= 3.1.1),
+prim (>= 1.0.16)
+Suggests:
+  knitr,
+rmarkdown,
+testthat
+VignetteBuilder: knitr
+License: GPL-3
+URL: https://github.com/dashaub/supervisedPRIM
+BugReports: https://github.com/dashaub/supervisedPRIM/issues
+LazyData: true
+RoxygenNote: 5.0.1
+ByteCompile: true
+NeedsCompilation: no
 
