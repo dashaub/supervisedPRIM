@@ -1,6 +1,7 @@
 #'Fit PRIM model to a labeled dataset
 #'@export
 #'@import prim
+#'@import stats
 #'@description perform supervised classification using Patient Rules Induction Method (PRIM)
 #'@param x matrix of data values
 #'@param y vector of response values
@@ -39,13 +40,14 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
 }
 
 #'Model Predictions
-#'@export
+#'@description Perform prediction on a trained \code{supervisedPRIM} model. Output
+#'to either predicted class or positive class probability is supported.
 #'@param object A trained model of class \code{supervisedPRIM} returned by \link[supervisedPRIM]{supervisedPRIM}
 #'@param newdata The new data on which to create predictions
 #'@param classProb Should the function return the estimated class
 #'@param ... additional arguments (ignored)
 #'probabilities instead of the predicted class?
-#'
+#'@export
 #'
 predict.supervisedPRIM <- function(object, newdata, classProb = FALSE, ...){
    # Determine if the threshold is upper or lower
@@ -54,22 +56,33 @@ predict.supervisedPRIM <- function(object, newdata, classProb = FALSE, ...){
    # Determine label for observations outside of the boxes
    other <- object$num.class
    
-   # Obtain the probabilities inside of each box
-   boxProbs <- sapply(object$y, FUN = mean)
-   
    # Fit the prim box on the new data
-   class(x) <- "prim"
-   primPred <- predict(object, newdata = newdata)
+   class(object) <- "prim"
+   primPred <- predict(object = object, newdata = newdata)
+   
+   # Determine the boxes to use
+   if(0 %in% primPred){
+     # The newdata matrix contains observations outside the range of the train set
+     other <- c(0, other)
+   }
+   inBox <- !(primPred %in% other)
    
    # Calculuate class probabilities using the same methodology of CART
    if(classProb){
-      return(boxProbs[primPred])
+     # Obtain the probabilities inside of each box
+     boxProbs <- sapply(object$y, FUN = mean)
+     
+     # Return class 0 in primPred indicates outside of training region
+     # Use mean imputation for these
+     boxProbs <- c(boxProbs, mean(unlist(object$y)))
+      return(boxProbs[primPred + 1])
    }
    
-   # Determine the boxes to use
-   inBox <- primPred != other
+
    #classPred <- ifelse(primPred != other, positive, 1 - positive)
-   if(object$ind[1] == 1){
+   
+   shift <- ifelse(other[1] == "0", 1L, 0L)
+   if(object$ind[1 + shift ] == 1){
       classPred <- ifelse(inBox, 1L, 0L)
       return(classPred)
    }
