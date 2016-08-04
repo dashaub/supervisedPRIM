@@ -19,7 +19,8 @@ Depends:
 Suggests:
   knitr,
   rmarkdown,
-  testthat
+  testthat,
+  kernlab
 VignetteBuilder: knitr
 License: GPL-3
 URL: https://github.com/dashaub/supervisedPRIM
