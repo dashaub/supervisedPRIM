@@ -1,4 +1,4 @@
-if(require(testthat)){
+if(require(testthat) && require(kernlab)){
    context("Building supervised PRIM models")
    # Predict if the species is "setosa" or not on the iris dataset
    # Prepare a train and test set
@@ -47,5 +47,31 @@ if(require(testthat)){
       expect_true(max(pp) <= 1)
       expect_true(min(pn) >= 0)
       expect_true(max(pn) <= 1)
+   })
+   
+   # Test on a large dataset
+   test_that("Testing on a large dataset"{
+     data(spam)
+     set.seed(99)
+     trInd <- sample(1:nrow(spam), size = 4100)
+     training <- spam[trInd, ]
+     testing <- spam[-trInd, ]
+     trainingX <- training
+     trainingY <- ifelse(training$type == "spam", 1L, 0L)
+     trainingX$type <- NULL
+     testingX <- testing
+     testingY <- ifelse(testing$type == "spam", 1L, 0L)
+     testingX$type <- NULL
+     
+     # Fit both
+     primModPos <- supervisedPRIM(x = trainingX, y = trainingY, threshold.type = 1)
+     primModNeg <- supervisedPRIM(x = trainingX, y = trainingY, threshold.type = -1)
+     
+     # Make the predictions on the test set
+     primPosPred <- predict(primModPos, newdata = testingX)
+     primNegPred <- predict(primModNeg, newdata = testingX)
+     
+     expect_true(length(primPosPred) == nrow(testingX))
+     expect_true(length(primNegPred) == nrow(testingX))
    })
 }
