@@ -50,7 +50,7 @@ if(require(testthat) && require(kernlab)){
    })
    
    # Test on a large dataset
-   test_that("Testing on a large dataset"{
+   test_that("Testing on a large dataset", {
      data(spam)
      set.seed(99)
      trInd <- sample(1:nrow(spam), size = 4100)
