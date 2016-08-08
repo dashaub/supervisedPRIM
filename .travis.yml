@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 
 language: r
 r:
@@ -7,6 +7,9 @@ r:
   - devel
 
 cache: packages
+
+before_install:
+  - sudo apt-get install r-cran-rgl
 
 install:
   - Rscript -e 'install.packages(c("devtools", "roxygen2", "testthat", "knitr", "rmarkdown")); devtools::install_deps()'
