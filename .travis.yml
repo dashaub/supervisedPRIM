@@ -12,7 +12,7 @@ before_install:
   - sudo apt-get install r-cran-rgl
 
 install:
-  - Rscript -e 'install.packages(c("devtools", "roxygen2", "testthat", "knitr", "rmarkdown")); devtools::install_deps()'
+  - Rscript -e 'install.packages(c("devtools", "roxygen2", "testthat", "knitr", "rmarkdown")); devtools::install_deps(dependencies = TRUE)'
 script:
   - Rscript -e 'devtools::check(manual = TRUE)'
   
