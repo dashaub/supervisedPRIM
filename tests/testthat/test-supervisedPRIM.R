@@ -1,4 +1,4 @@
-if(require(testthat) && require(kernlab)){
+if(require(testthat) & require(kernlab)){
    context("Building supervised PRIM models")
    # Predict if the species is "setosa" or not on the iris dataset
    # Prepare a train and test set
