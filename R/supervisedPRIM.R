@@ -22,10 +22,10 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
       stop("All columns in x must be numeric")
    }
    
-   # Ensure the data are binomial
+   # Ensure the data are binary
    uniquey <- unique(y)
    if(length(uniquey) != 2){
-      stop("The y data must be labeled binomial 0/1 data.")
+      stop("The y data must be labeled binary 0/1 data.")
    }
    if(!all(unique(y) %in% c(0, 1))){
       
