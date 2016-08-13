@@ -74,4 +74,9 @@ if(require(testthat) & require(kernlab)){
      expect_true(length(primPosPred) == nrow(testingX))
      expect_true(length(primNegPred) == nrow(testingX))
    })
+   
+   # Test for invalid input
+   test_that("Testing for invalid inputs", {
+      expect_error(supervisedPRIM(x = mtcars[, names(mtcars) != "mpg"], y = mtcars$mpg))
+   })
 }
