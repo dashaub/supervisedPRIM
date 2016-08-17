@@ -79,7 +79,7 @@ if(require(testthat) & require(kernlab)){
    test_that("Testing for invalid inputs", {
       mcars <- mtcars
       mcars$am <- factor(mcars$am)
-      expect_error(supervisedPRIM(x = tcars[, names(tcars) != "mpg"], y = tcars$mpg))
+      expect_error(supervisedPRIM(x = mcars[, names(mcars) != "mpg"], y = mcars$mpg))
       expect_error(supervisedPRIM(x = matrix(0, nrow = 10, ncol = 3), y = runif(10)))
    })
 }
