@@ -1,5 +1,7 @@
 sudo: true
 
+dist: trusty
+
 language: r
 r:
   - oldrel
