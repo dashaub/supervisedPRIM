@@ -20,7 +20,7 @@
 #' xData <- iris
 #' xData%Species <- NULL
 #' primModel < supervisedPRIM(x = xData, y = yData)
-#' supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
+supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
                            mass.min = 0.05, threshold.type = 1, ...){
    # Ensure the input is all numeric data
    if(!all(sapply(x, class) %in% c("numeric", "integer"))){
