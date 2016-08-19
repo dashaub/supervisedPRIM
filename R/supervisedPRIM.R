@@ -17,8 +17,8 @@
 #'@example
 #'yData <- ifelse(iris$Species == "setosa", 1L, 0L)
 #'xData <- iris
-#'xData%Species <- NULL
-#'primModel < supervisedPRIM(x = xData, y = yData)
+#'xData$Species <- NULL
+#'primModel <- supervisedPRIM(x = xData, y = yData)
 supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
                            mass.min = 0.05, threshold.type = 1, ...){
    # Ensure the input is all numeric data
