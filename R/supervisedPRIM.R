@@ -15,7 +15,6 @@
 #'@return an object of class \code{supervisedPRIM}. See additional details
 #'in \link[prim]{prim.box}
 #'@example
-#'data(iris)
 #'yData <- ifelse(iris$Species == "setosa", 1L, 0L)
 #'xData <- iris
 #'xData%Species <- NULL
