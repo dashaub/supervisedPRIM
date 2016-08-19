@@ -4,7 +4,7 @@
 #'@import stats
 #'@description perform supervised classification using Patient Rules Induction Method (PRIM)
 #'@param x matrix of data values
-#'@param y vector of response values
+#'@param y binary vector of 0/1 response values
 #'@param peel.alpha peeling quantile tuning parameter
 #'@param paste.alpha pasting quantile tuning parameter
 #'@param mass.min minimum mass tuning parameter
@@ -14,7 +14,9 @@
 #'@details Fit 
 #'@return an object of class \code{supervisedPRIM}. See additional details
 #'in \link[prim]{prim.box}
-#'@example
+#'@examples
+#'# Train a model to determine if a flower is setosa
+#'data(iris)
 #'yData <- ifelse(iris$Species == "setosa", 1L, 0L)
 #'xData <- iris
 #'xData$Species <- NULL
@@ -52,7 +54,15 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
 #'@param ... additional arguments (ignored)
 #'probabilities instead of the predicted class?
 #'@export
-#'
+#'@examples
+#'# Train a model to determine if a flower is setosa
+#'data(iris)
+#'yData <- ifelse(iris$Species == "setosa", 1L, 0L)
+#'xData <- iris
+#'xData$Species <- NULL
+#'primModel <- supervisedPRIM(x = xData, y = yData)
+#'# Predict on the original dataset
+#'predictions <- predict(primModel, newdata = xData)
 predict.supervisedPRIM <- function(object, newdata, classProb = FALSE, ...){
    # Determine if the threshold is upper or lower
    positive <- object$ind[1]
