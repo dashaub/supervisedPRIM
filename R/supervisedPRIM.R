@@ -14,8 +14,13 @@
 #'@details Fit 
 #'@return an object of class \code{supervisedPRIM}. See additional details
 #'in \link[prim]{prim.box}
-#'
-supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
+#'@example
+#' data(iris)
+#' yData <- ifelse(iris$Species == "setosa", 1L, 0L)
+#' xData <- iris
+#' xData%Species <- NULL
+#' primModel < supervisedPRIM(x = xData, y = yData)
+#' supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
                            mass.min = 0.05, threshold.type = 1, ...){
    # Ensure the input is all numeric data
    if(!all(sapply(x, class) %in% c("numeric", "integer"))){
