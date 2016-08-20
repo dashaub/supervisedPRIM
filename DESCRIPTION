@@ -8,10 +8,7 @@ Description: The Patient Rules Induction Method (PRIM) is typically
   used for "bump hunting" data mining to identify regions with abnormally
   high concentrations of data with large or small values. This package
   extends this methodology so that it can be applied to binary classification
-  problems and used for prediction. While this method will not usually
-  create models with predictive accuracy comparable to more advanced techniques such
-  as random forests or boosting, it is not highly correlated with the methodologies
-  used by other classification algorithms, so it can be useful in ensembles.
+  problems and used for prediction.
 Depends:
   R (>= 3.1.1),
   stats,
