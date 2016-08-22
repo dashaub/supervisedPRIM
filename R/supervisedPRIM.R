@@ -14,6 +14,7 @@
 #'@details Fit 
 #'@return an object of class \code{supervisedPRIM}. See additional details
 #'in \link[prim]{prim.box}
+#'@author David Shaub
 #'@examples
 #'# Train a model to determine if a flower is setosa
 #'data(iris)
@@ -54,6 +55,7 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
 #'@param ... additional arguments (ignored)
 #'probabilities instead of the predicted class?
 #'@export
+#'@author David Shaub
 #'@examples
 #'# Train a model to determine if a flower is setosa
 #'data(iris)
