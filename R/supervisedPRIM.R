@@ -104,12 +104,4 @@ predict.supervisedPRIM <- function(object, newdata, classProb = FALSE, ...){
    }
    classPred <- ifelse(inBox, 0L, 1L)
    return(classPred)
-   
-   
-   # To ensure the estimate for the negative class is unbiased,
-   # use the training sample proportion to randomly assign
-#    if(biasAdj){
-#       
-#    }
-   return(classPred)
 }
