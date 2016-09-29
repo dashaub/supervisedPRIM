@@ -1,10 +1,10 @@
 Package: supervisedPRIM
-Title: Supervised Classification Learning and Prediction using Patient Rules Induction Method (PRIM)
-Version: 1.0.1
-Date: 2016-08-22
+Title: Supervised Classification Learning and Prediction using Patient Rule Induction Method (PRIM)
+Version: 2.0.0
+Date: 2016-09-30
 Authors@R:
   person("David", "Shaub", email = "davidshaub@gmx.com", role = c("aut", "cre"))
-Description: The Patient Rules Induction Method (PRIM) is typically
+Description: The Patient Rule Induction Method (PRIM) is typically
   used for "bump hunting" data mining to identify regions with abnormally
   high concentrations of data with large or small values. This package
   extends this methodology so that it can be applied to binary classification
