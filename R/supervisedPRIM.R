@@ -2,7 +2,7 @@
 #'@export
 #'@import prim
 #'@import stats
-#'@description perform supervised classification using Patient Rules Induction Method (PRIM)
+#'@description perform supervised classification using Patient Rule Induction Method (PRIM)
 #'@param x matrix of data values
 #'@param y binary vector of 0/1 response values
 #'@param peel.alpha peeling quantile tuning parameter
@@ -34,7 +34,7 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
   if(length(lev) != 2){
     stop("Only two-class classification is supported.")
   } else{
-   y <- ifelse(y == lev[1], 1L, 0L) 
+    y <- ifelse(y == lev[1], 1L, 0L) 
   }
   
   # Ensure the data are binary
@@ -112,7 +112,12 @@ predict.supervisedPRIM <- function(object, newdata, classProb = FALSE, ...){
     #firstSlot <- ifelse(positive == 1, 1, 0)
     #secondSlot <- ifelse(positive == -1, 0, 1)
     #classPred <- ifelse(inBox, 1L, 0L)
-    classPred <- ifelse(positive, inBox, as.numeric(!inBox))
+    #classPred <- ifelse(positive, inBox, as.numeric(!inBox))
+    if(positive){
+      classPred <- inBox
+    } else{
+      classPred <- as.numeric(!inBox)
+    }
     classPred <- factor(ifelse(classPred == 1L, object$levels[1], object$levels[2]), levels = object$levels)
     return(classPred)
   }
