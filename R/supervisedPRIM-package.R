@@ -1,4 +1,4 @@
-#'Supervised Classification Learning and Prediction using Patient Rules Induction Method (PRIM).
+#'Supervised Classification Learning and Prediction using Patient Rule Induction Method (PRIM).
 #'
 #' \tabular{ll}{
 #' Package: \tab supervisedPRIM\cr
@@ -17,7 +17,6 @@
 #' @docType package
 #' @title supervisedPRIM
 #' @keywords package
-#' @aliases kmmisc package-kmmisc
 #'
 #' 
 ##NULL
