@@ -30,12 +30,17 @@ supervisedPRIM <- function(x, y, peel.alpha = 0.05, paste.alpha = 0.01,
   }
   
   # Convert factor to binary
-  lev <- levels(y)
-  if(length(lev) != 2){
-    stop("Only two-class classification is supported.")
+  if(class(y) == "factor"){
+    lev <- levels(y)
+    if(length(lev) != 2){
+      stop("Only two-class classification is supported.")
+    } else{
+      y <- ifelse(y == lev[1], 1L, 0L) 
+    }
   } else{
-    y <- ifelse(y == lev[1], 1L, 0L) 
+    lev <- NULL
   }
+
   
   # Ensure the data are binary
   uniquey <- unique(y)
@@ -118,19 +123,19 @@ predict.supervisedPRIM <- function(object, newdata, classProb = FALSE, ...){
     } else{
       classPred <- as.numeric(!inBox)
     }
-    classPred <- factor(ifelse(classPred == 1L, object$levels[1], object$levels[2]), levels = object$levels)
+    if(!is.null(object$levels)){
+      classPred <- factor(ifelse(classPred == 1L, object$levels[1], object$levels[2]), levels = object$levels)
+    } else{
+      classPred <- as.numeric(classPred)
+    }
     return(classPred)
   }
   classPred <- ifelse(inBox, 0L, 1L)
   #classPred <- factor(ifelse(predict(modelFit, newdata, classProb = FALSE) == 1, modelFit$levels[1], modelFit$levels[2]), levels = modelFit$levels)
-  classPred <- factor(ifelse(classPred == 1L, object$levels[1], object$levels[2]), levels = object$levels)
-  return(classPred)
-  
-  
-  # To ensure the estimate for the negative class is unbiased,
-  # use the training sample proportion to randomly assign
-  #    if(biasAdj){
-  #       
-  #    }
-  return(classPred)
+  if(!is.null(object$levels)){
+    classPred <- factor(ifelse(classPred == 1L, object$levels[1], object$levels[2]), levels = object$levels)
+  } else{
+    classPred <- as.numeric(classPred)
+  }
+ return(classPred)
 }
