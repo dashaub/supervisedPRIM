@@ -16,6 +16,7 @@ before_install:
 install:
   - Rscript -e 'install.packages(c("devtools", "roxygen2", "testthat", "knitr", "rmarkdown")); devtools::install_deps(dependencies = TRUE)'
 script:
+  - Rscript -e 'devtools::test()'
   - Rscript -e 'devtools::check(manual = TRUE)'
   
 r_github_packages:
