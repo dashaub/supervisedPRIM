@@ -31,7 +31,14 @@ This returns a S3 class `supervisedPRIM` object, and the regular S3 `predict()` 
 ```
 predictions <- predict(primModel, newdata = xData)
 ```
-Furthermore, this `supervisedPRIM` objects also inherits from the "prim" package, so all the regular method there (e.g. `plot()`) can be used on the `supervisedPRIM` objects. Consult the documention of the "prim" package for more comprehensive details of the available functions and the arguments accepted for training.
+The `supervisedPRIM()` function can all train on datasets with a factor variable with two levels. Multinomial classification is not supported, however.
+```
+yData <- factor(ifelse(iris$Species == "setosa", "setosa", "other"), levels = c("setosa", "other"))
+primModel <- supervisedPRIM(x = xData, y = yData)
+predictions <- predict(primModel, newdata = xData)
+```
+
+Furthermore, this `supervisedPRIM` objects also inherits from the "prim" package, so all the regular method there (e.g. `summary()` and `plot()`) can be used on the `supervisedPRIM` objects. Consult the documention of the "prim" package for more comprehensive details of the available functions and the arguments accepted for training.
 
 ## License
 This package is free software released under the [GPL-3](http://www.gnu.org/licenses/gpl-3.0.en.html) license.
